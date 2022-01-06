@@ -51,4 +51,55 @@ public class MenuController : MonoBehaviourPunCallbacks
     {
         NetworkManager.instance.JoinRoom(roomNameInput.text);
     }
+
+    public void OnPlayerNameUpdate(TMP_InputField playerNameInput)
+    {
+        PhotonNetwork.NickName = playerNameInput.text;
+    }
+
+    public override void OnJoinedRoom()
+    {
+        SetScreen(lobbyScreen);
+        photonView.RPC(nameof(UpdateLobbyUI), RpcTarget.All);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        UpdateLobbyUI();
+    }
+
+    [PunRPC]
+    public void UpdateLobbyUI()
+    {
+        txtPlayerList.text = "";
+
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            txtPlayerList.text += player.NickName + "\n";
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            btnStartGame.interactable = true;
+        }
+        else
+        {
+            btnStartGame.interactable = false;
+        }
+    }
+
+    public void OnLeaveLobbyButton()
+    {
+        PhotonNetwork.LeaveRoom();
+        SetScreen(mainScreen);
+    }
+
+    public void OnStartGameButton()
+    {
+        if (PhotonNetwork.PlayerList.Length > 1 && PhotonNetwork.PlayerList.Length < 5)
+        {
+            NetworkManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "MainGame");
+
+        }
+    }
 }

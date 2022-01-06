@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
 namespace unitycoder_MobilePaint
 {
@@ -26,7 +28,7 @@ namespace unitycoder_MobilePaint
 
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]
-    public class MobilePaint : MonoBehaviour
+    public class MobilePaint : MonoBehaviourPunCallbacks
     {
         [Header("Mouse or Touch")]
         public bool enableTouch = false;
@@ -485,20 +487,24 @@ namespace unitycoder_MobilePaint
         {
             if (enableTouch)
             {
-                TouchPaint();
+                photonView.RPC(nameof(TouchPaint), RpcTarget.All);
+                //TouchPaint();
             }
             else {
-                MousePaint();
+                photonView.RPC(nameof(MousePaint), RpcTarget.All);
+                //MousePaint();
             }
 
             if (textureNeedsUpdate && (realTimeTexUpdate || Time.time > nextTextureUpdate))
             {
                 nextTextureUpdate = Time.time + textureUpdateSpeed;
-                UpdateTexture();
+                photonView.RPC(nameof(UpdateTexture), RpcTarget.All);
+                //UpdateTexture();
             }
         }
 
         // handle mouse events
+        [PunRPC]
         void MousePaint()
         {
             // TEST: Undo key for desktop
@@ -678,6 +684,7 @@ namespace unitycoder_MobilePaint
 
         // ** Main loop for touch paint **
         int i = 0;
+        [PunRPC]
         void TouchPaint()
         {
             // check if any touch is over UI objects, then early exit (dont paint)
@@ -882,7 +889,7 @@ namespace unitycoder_MobilePaint
             userInterface.SetActive(isUIVisible);
         }
 
-
+        [PunRPC]
         void UpdateTexture()
         {
             textureNeedsUpdate = false;
