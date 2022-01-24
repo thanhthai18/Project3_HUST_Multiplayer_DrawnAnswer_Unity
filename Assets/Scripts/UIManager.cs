@@ -13,6 +13,10 @@ public class UIManager : MonoBehaviour
     public Text txtTime;
     public RankUI[] playerContainersRank;
     public GameObject panelRankFrame;
+    public Button btnClear, btnBlack, btnGreen, btnRed, btnYellow, btnBlue, btnErase;
+    public Button btnCheck;
+    public TMP_InputField inputAnswer;
+    public Text txtGoiY, txtAnswer;
 
 
     void Awake()
@@ -43,18 +47,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
-
+    [PunRPC]
     public void SetHappy(int id)
     {
         PlayerUI container = playerContainers[id-1];
         container.happyIcon.gameObject.SetActive(true);
     }
 
-
+    [PunRPC]
     public void SetSad(int id)
     {
         PlayerUI container = playerContainers[id - 1];
         container.sadIcon.gameObject.SetActive(true);
+        container.sadIcon.GetComponent<Image>().DOFade(1, 0);
         container.sadIcon.GetComponent<Image>().DOFade(0, 1).OnComplete(() =>
          {
              container.sadIcon.gameObject.SetActive(false);
@@ -87,6 +92,8 @@ public class UIManager : MonoBehaviour
 
     public void SetPanelRank()
     {
+        int maxScore = 0;
+        List<int> listIndexRank = new List<int>();
         panelRankFrame.SetActive(true);
         for (int x = 0; x < playerContainersRank.Length; ++x)
         {
@@ -95,13 +102,32 @@ public class UIManager : MonoBehaviour
             {
                 container.obj.SetActive(true);
                 container.namePlayer.text = PhotonNetwork.PlayerList[x].NickName;
-                container.txtScore.text = GameManager.instance.players[x].score.ToString();
+                container.txtScore.text = "score: " + GameManager.instance.players[x].score.ToString();
+                if(maxScore <= GameManager.instance.players[x].score)
+                {
+                    maxScore = GameManager.instance.players[x].score;
+                    listIndexRank.Add(x);
+                }
             }
             else
             {
                 container.obj.SetActive(false);
             }
         }
+
+        listIndexRank.ForEach(s => playerContainersRank[s].namePlayer.DOBlendableColor(Color.red, 2));
+    }
+
+    [PunRPC]
+    public void SetTextGoiY(string goiy)
+    {
+        txtGoiY.text = goiy;
+    }
+    [PunRPC]
+    public void SetTextAnswer(string answer)
+    {
+        txtAnswer.text = answer;
+        GameManager.instance.currentGameAnswer = answer;
     }
 
 

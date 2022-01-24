@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1013557813022724538}
   - component: {fileID: 1013557813022724541}
   - component: {fileID: 1830192218201946353}
+  - component: {fileID: 897115804549298404}
   m_Layer: 0
   m_Name: MyPlayer
   m_TagString: Untagged
@@ -48,7 +49,9 @@ MonoBehaviour:
   isMyTurn: 0
   score: 0
   myAnswer: qwe
-  drawingPlanceCanvas: {fileID: 0}
+  inputAnswer: {fileID: 0}
+  btnCheck: {fileID: 0}
+  VFXMe: {fileID: 0}
 --- !u!114 &1830192218201946353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,3 +74,32 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &897115804549298404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013557813022724540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f50b5eab92f0e546b2ff83b66ae851a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 1663043817574709502, guid: 968dc5fb8a2646c45863aa2b4a22fb4a, type: 3}
+  currentLine: {fileID: 0}
+  lineRender: {fileID: 0}
+  fingerPositions: []
+  mainCamera: {fileID: 0}
+  mousePos: {x: 0, y: 0}
+  listForClear: []
+  edgeCollider: {fileID: 0}
+  btnClear: {fileID: 0}
+  btnBlack: {fileID: 0}
+  btnGreen: {fileID: 0}
+  btnRed: {fileID: 0}
+  btnYellow: {fileID: 0}
+  btnBlue: {fileID: 0}
+  btnErase: {fileID: 0}
+  currentColor: {r: 0, g: 0, b: 0, a: 0}
+  currentSortOder: 0

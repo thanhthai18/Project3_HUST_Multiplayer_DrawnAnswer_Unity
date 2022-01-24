@@ -96,7 +96,7 @@ public class MenuController : MonoBehaviourPunCallbacks
 
     public void OnStartGameButton()
     {
-        if (PhotonNetwork.PlayerList.Length > 1 && PhotonNetwork.PlayerList.Length < 5)
+        if (PhotonNetwork.PlayerList.Length >= 1 && PhotonNetwork.PlayerList.Length < 5)
         {
             NetworkManager.instance.photonView.RPC("ChangeScene", RpcTarget.All, "MainGame");
 

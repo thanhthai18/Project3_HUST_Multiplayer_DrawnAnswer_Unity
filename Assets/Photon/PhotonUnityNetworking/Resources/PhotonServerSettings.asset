@@ -59,6 +59,30 @@ MonoBehaviour:
   - UpdateTexture
   - SetHappy
   - SetSad
+  - DrawLine
+  - CreateLine
+  - UpdateLine
+  - SetMousePos
+  - CheckDistanceForDraw
+  - ClearImage
+  - Pun_BtnBlack_ResetColor
+  - Pun_BtnBlue
+  - Pun_BtnGreen
+  - Pun_BtnRed
+  - Pun_BtnYellow
+  - Pun_BtnErase
+  - BtnBlack_ResetColor
+  - BtnBlue
+  - BtnErase
+  - BtnGreen
+  - BtnRed
+  - BtnYellow
+  - SetTextAnswer
+  - SetTextGoiY
+  - SetQuestion
+  - StartTime
+  - StopTime
+  - UpdateScore
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
